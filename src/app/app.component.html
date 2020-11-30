@@ -1,1 +1,9 @@
-<p>Hello</p>
+<!--<div *ngIf="loading$ | async" class="loader" id="loader"></div>-->
+<!--<p *ngIf="message">{{ message }}</p>-->
+<mat-form-field>
+  <mat-autocomplete class="example-full-width" #auto="matAutocomplete">
+    <mat-option *ngFor="let movie of movies | keyvalue" [value]="movie.key">
+      {{ movie.value }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

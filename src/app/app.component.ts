@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as fromStore from './store';
+import * as fromSelectors from './store/selectors';
 import * as fromActions from './store/actions';
 import { Store } from '@ngrx/store';
-import { Papa } from 'ngx-papaparse';
-import { HttpClient } from '@angular/common/http';
+import { combineLatest } from 'rxjs';
+import { MovieModel } from './models/movie.model';
 
 @Component({
   selector: 'app-root',
@@ -11,30 +12,19 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public movies: any[];
-  constructor(
-    private store: Store<fromStore.MoviesState>,
-    private papa: Papa,
-    private httpClient: HttpClient
-  ) {
-    const csvUrl = 'assets/tmdb_5000_movies.csv';
+  public movies: { [key: string]: MovieModel } = {};
+  public loading$ = this.store.select(fromSelectors.getLoading);
+  public message: string;
+  constructor(private store: Store<fromStore.MoviesState>) {}
 
-    this.httpClient.get(csvUrl, { responseType: 'text' }).subscribe(
-      (data) => {
-        const options = {
-          complete: (result) => {
-            this.movies = result.data;
-            console.log(result.data);
-          },
-          header: true,
-        };
-        this.papa.parse(data, options);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  public ngOnInit(): void {
+    this.store.dispatch(new fromActions.MoviesGet());
+    combineLatest(
+      this.store.select(fromSelectors.getLoadingMessage),
+      this.store.select(fromSelectors.getAllMovies)
+    ).subscribe(([message, movies]) => {
+      this.message = message;
+      this.movies = movies;
+    });
   }
-
-  public ngOnInit(): void {}
 }

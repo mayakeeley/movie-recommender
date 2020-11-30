@@ -18,7 +18,7 @@ export const reducers: ActionReducerMap<MoviesState> = {
   movies: fromMovies.reducer,
 };
 
-export const getMovies = createFeatureSelector<MoviesState>('movies');
+export const getMovies = (state: MoviesState) => state.movies;
 
 // half hour
 setExpiresAfter(1800000);
