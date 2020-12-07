@@ -1,9 +1,14 @@
-<!--<div *ngIf="loading$ | async" class="loader" id="loader"></div>-->
-<!--<p *ngIf="message">{{ message }}</p>-->
-<mat-form-field>
-  <mat-autocomplete class="example-full-width" #auto="matAutocomplete">
-    <mat-option *ngFor="let movie of movies | keyvalue" [value]="movie.key">
-      {{ movie.value }}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
+<div *ngIf="loading$ | async" class="loader" id="loader"></div>
+<p *ngIf="message">{{ message }}</p>
+<div *ngIf="movies.length && !confirmed">
+  <div class="tiles">
+    <a
+      (click)="selectMovie(movie)"
+      [ngClass]="selectedMovies.includes(movie) ? 'tiles__tile__selected' : ''"
+      class="tiles__tile"
+      *ngFor="let movie of movies | slice: 0:24"
+      >{{ movie.title }}</a
+    >
+  </div>
+  <a class="tiles__tile" (click)="confirmSelection()">Confirm selection</a>
+</div>

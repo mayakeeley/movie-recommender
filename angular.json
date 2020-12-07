@@ -122,5 +122,10 @@
       }
     }
   },
-  "defaultProject": "csv-test"
+  "defaultProject": "csv-test",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

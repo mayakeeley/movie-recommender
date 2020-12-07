@@ -27,6 +27,7 @@
     "ngx-papaparse": "5",
     "prettier": "^2.2.0",
     "rxjs": "~6.6.0",
+    "sass": "^1.30.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

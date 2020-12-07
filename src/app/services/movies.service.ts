@@ -9,7 +9,7 @@ export class MoviesService {
   constructor(private httpClient: HttpClient) {}
 
   public getMovies(): Observable<string> {
-    const csvUrl = 'assets/tmdb_5000_movies.csv';
-    return this.httpClient.get(csvUrl, { responseType: 'text' });
+    const jsonFile = 'assets/tmdb_5000_movies.json';
+    return this.httpClient.get(jsonFile, { responseType: 'text' });
   }
 }
