@@ -11,7 +11,7 @@
         [ngClass]="
           selectedMovies.includes(movie) ? 'movies__tile__selected' : ''
         "
-        class="movies__tile"
+        class="movies__tile movies__tile__unselected"
         *ngFor="let movie of movies"
         >{{ movie.title }}</a
       >
