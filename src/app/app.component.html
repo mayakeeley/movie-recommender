@@ -1,23 +1,44 @@
-<div *ngIf="loading$ | async" class="loader" id="loader"></div>
-<p *ngIf="message">{{ message }}</p>
-<div *ngIf="movies.length && !confirmed">
-  <div class="tiles">
-    <a
-      (click)="selectMovie(movie)"
-      [ngClass]="selectedMovies.includes(movie) ? 'tiles__tile__selected' : ''"
-      class="tiles__tile"
-      *ngFor="let movie of movies"
-      >{{ movie.title }}</a
+<div class="recommender">
+  <div class="loading">
+    <div *ngIf="loading$ | async" class="loader" id="loader"></div>
+    <p class="loading__message" *ngIf="message">{{ message }}</p>
+  </div>
+  <div class="movies" *ngIf="movies.length && !confirmed">
+    <h3 class="movies__title">Select up to 5 of your favourite movies</h3>
+    <div class="movies__tiles">
+      <a
+        (click)="selectMovie(movie)"
+        [ngClass]="
+          selectedMovies.includes(movie) ? 'movies__tile__selected' : ''
+        "
+        class="movies__tile"
+        *ngFor="let movie of movies"
+        >{{ movie.title }}</a
+      >
+    </div>
+    <button
+      [ngClass]="!selectedMovies.length ? 'movies__button__disabled' : ''"
+      class="movies__button"
+      (click)="confirmSelection()"
     >
+      Confirm selection
+    </button>
   </div>
-  <a class="tiles__tile" (click)="confirmSelection()">Confirm selection</a>
-</div>
-<div *ngIf="scoredMovies.length">
-  <h3>Recommended Films</h3>
-  <div class="tiles">
-    <a class="tiles__tile" *ngFor="let movie of scoredMovies | slice: 0:5">{{
-      movie.title
-    }}</a>
+  <div class="movies" *ngIf="scoredMovies.length">
+    <h3 class="movies__title">Recommended Films</h3>
+    <div class="movies__tiles">
+      <div
+        class="movies__tiles__recommended"
+        *ngFor="let movie of scoredMovies | slice: 0:5; let i = index"
+      >
+        <a class="movies__tile"
+          >{{ movie.title }}
+          <button class="movies__tile__remove movies__button" (click)="removeMovie(i)">
+            I've already seen this
+          </button>
+        </a>
+      </div>
+    </div>
+    <button class="movies__button" (click)="restart()">Restart</button>
   </div>
-  <a (click)="restart()">Restart</a>
 </div>

@@ -84,13 +84,13 @@ export class MoviesEffect {
             (item) => item.id === keyword.id
           );
           if (matchingKeyword) {
-            score = score + 0.1 * matchingKeyword.frequency;
+            score = score + matchingKeyword.frequency;
           }
         });
         movie.genres.forEach((genre) => {
           const matchingGenre = genres.find((item) => item.id === genre.id);
           if (matchingGenre) {
-            score = score + 0.1 * matchingGenre.frequency;
+            score = score + matchingGenre.frequency;
           }
         });
         return {

@@ -87,6 +87,7 @@ export function reducer(
         confirmedSelection: true,
         loading: true,
         loaded: false,
+        message: 'Recommending movies for you',
       };
     }
     case fromMovies.MOVIES_CONFIRM_SELECTION_SUCCESS: {
@@ -95,6 +96,7 @@ export function reducer(
         ...action.payload,
         loading: false,
         loaded: true,
+        message: undefined
       };
     }
     case fromMovies.MOVIES_RESTART: {

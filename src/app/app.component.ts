@@ -49,12 +49,18 @@ export class AppComponent implements OnInit {
   }
 
   public confirmSelection(): void {
-    if (this.selectedMovies.length === 5) {
+    if (this.selectedMovies.length) {
       this.store.dispatch(new fromActions.MoviesConfirmSelection());
     }
   }
 
   public restart(): void {
     this.store.dispatch(new fromActions.MoviesRestart());
+  }
+
+  public removeMovie(index): void {
+    const newMovieList = this.scoredMovies.slice();
+    newMovieList.splice(index, 1);
+    this.scoredMovies = newMovieList;
   }
 }

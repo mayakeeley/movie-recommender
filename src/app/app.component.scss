@@ -1,8 +1,26 @@
-$blue: #3498db;
+$blue: #00bfff;
+$light-blue: #e5f9ff;
+$gray: #f3f3f3;
+$black: #000000;
+$white: #ffffff;
+
+.recommender {
+  background-color: $black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  &__message {
+    color: $white;
+  }
+}
 
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
+  border: 16px solid $gray;
+  border-top: 16px solid $blue;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -17,31 +35,57 @@ $blue: #3498db;
     transform: rotate(360deg);
   }
 }
-
-.example-full-width {
-  width: 100vw;
-  height: 20px;
-}
-
-.tiles {
+.movies {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &__title {
+    color: $white;
+  }
+  &__tiles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    &__recommended {
+      flex: 0 0 25%;
+    }
+  }
 
   &__tile {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    flex: 1 1 20%;
+    flex: 0 0 25%;
     border: 2px solid $blue;
     margin: 20px;
     padding: 20px;
     cursor: pointer;
-
-    &:hover {
-      background-color: $blue;
-    }
+    background-color: $light-blue;
 
     &__selected {
       background-color: $blue;
+    }
+
+    &__remove {
+      cursor: pointer;
+      display: block;
+      margin-top: 20px;
+    }
+  }
+  &__button {
+    background-color: $blue;
+    color: white;
+    border: 1px solid $blue;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 500;
+
+    &__disabled {
+      opacity: 0.7;
     }
   }
 }
