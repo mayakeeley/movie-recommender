@@ -86,6 +86,7 @@ $white: #ffffff;
   &__button {
     background-color: $blue;
     color: white;
+    cursor: pointer;
     border: 1px solid $blue;
     padding: 1.25em;
     font-size: 1em;
@@ -94,6 +95,7 @@ $white: #ffffff;
 
     &__disabled {
       opacity: 0.7;
+      cursor: not-allowed;
     }
   }
 }
