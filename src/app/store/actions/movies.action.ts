@@ -13,6 +13,8 @@ export const MOVIES_CONFIRM_SELECTION_SUCCESS =
   '[Movies] confirm selection success';
 export const MOVIES_CONFIRM_SELECTION_FAIL = '[Movies] confirm selection fail';
 
+export const MOVIES_RESTART = '[Movies] restart';
+
 export class MoviesGet implements Action {
   public readonly type = MOVIES_GET;
 }
@@ -48,13 +50,23 @@ export class MoviesConfirmSelection implements Action {
 export class MoviesConfirmSelectionSuccess implements Action {
   public readonly type = MOVIES_CONFIRM_SELECTION_SUCCESS;
 
-  constructor(public payload: { keywords: any[]; genres: any[] }) {}
+  constructor(
+    public payload: {
+      scoredMovies: MovieModel[];
+      keywords: { id: string; name: string; frequency: number }[];
+      genres: { id: string; name: string; frequency: number }[];
+    }
+  ) {}
 }
 
 export class MoviesConfirmSelectionFail implements Action {
   public readonly type = MOVIES_CONFIRM_SELECTION_FAIL;
 
   constructor(public payload: any) {}
+}
+
+export class MoviesRestart implements Action {
+  public readonly type = MOVIES_RESTART;
 }
 
 export type MoviesAction =
@@ -65,4 +77,5 @@ export type MoviesAction =
   | MoviesDeselect
   | MoviesConfirmSelection
   | MoviesConfirmSelectionSuccess
-  | MoviesConfirmSelectionFail;
+  | MoviesConfirmSelectionFail
+  | MoviesRestart;

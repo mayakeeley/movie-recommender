@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { MoviesService } from '../../services/movies.service';
 import { Store } from '@ngrx/store';
 import { MoviesState } from '../reducers';
+import { MovieModel } from '../../models/movie.model';
 
 @Injectable()
 export class MoviesEffect {
@@ -24,17 +25,30 @@ export class MoviesEffect {
     })
   );
 
+  @Effect()
   public confirmSelection$ = this.actions$.pipe(
     ofType(fromActions.MOVIES_CONFIRM_SELECTION),
-    withLatestFrom(this.store.select(fromSelectors.getSelectedMovies)),
-    map(([never, selectedMovies]) => {
-      console.log('confirm selection');
+    withLatestFrom(
+      this.store.select(fromSelectors.getSelectedMovies),
+      this.store.select(fromSelectors.getRemainingMovies)
+    ),
+    map(([never, selectedMovies, allMovies]) => {
       const keywords = this.getFrequencyOfTerm(selectedMovies, 'keywords');
       const genres = this.getFrequencyOfTerm(selectedMovies, 'genres');
+      const scoredMovies = this.scoreMovies(allMovies, keywords, genres);
       return new fromActions.MoviesConfirmSelectionSuccess({
+        scoredMovies,
         keywords,
         genres,
       });
+    })
+  );
+
+  @Effect()
+  public restart$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_RESTART),
+    map(() => {
+      return new fromActions.MoviesGet();
     })
   );
 
@@ -48,14 +62,42 @@ export class MoviesEffect {
     const terms = [];
     selectedMovies.forEach((movie) => {
       movie[term].forEach((item) => {
-        const index = terms.indexOf(item);
+        const index = terms.findIndex((termItem) => {
+          return termItem.id === item.id;
+        });
         if (index !== -1) {
-          terms[index].frequency = terms[index].frequency + 1;
+          terms[index].frequency += terms[index].frequency;
         } else {
           terms.push({ ...item, frequency: 1 });
         }
       });
     });
     return terms;
+  }
+
+  public scoreMovies(movies, keywords, genres): MovieModel[] {
+    return movies
+      .map((movie) => {
+        let score = 0;
+        movie.keywords.forEach((keyword) => {
+          const matchingKeyword = keywords.find(
+            (item) => item.id === keyword.id
+          );
+          if (matchingKeyword) {
+            score = score + 0.1 * matchingKeyword.frequency;
+          }
+        });
+        movie.genres.forEach((genre) => {
+          const matchingGenre = genres.find((item) => item.id === genre.id);
+          if (matchingGenre) {
+            score = score + 0.1 * matchingGenre.frequency;
+          }
+        });
+        return {
+          ...movie,
+          score,
+        };
+      })
+      .sort((a, b) => b.score - a.score);
   }
 }

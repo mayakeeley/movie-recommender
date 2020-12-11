@@ -6,9 +6,18 @@
       (click)="selectMovie(movie)"
       [ngClass]="selectedMovies.includes(movie) ? 'tiles__tile__selected' : ''"
       class="tiles__tile"
-      *ngFor="let movie of movies | slice: 0:24"
+      *ngFor="let movie of movies"
       >{{ movie.title }}</a
     >
   </div>
   <a class="tiles__tile" (click)="confirmSelection()">Confirm selection</a>
+</div>
+<div *ngIf="scoredMovies.length">
+  <h3>Recommended Films</h3>
+  <div class="tiles">
+    <a class="tiles__tile" *ngFor="let movie of scoredMovies | slice: 0:5">{{
+      movie.title
+    }}</a>
+  </div>
+  <a (click)="restart()">Restart</a>
 </div>

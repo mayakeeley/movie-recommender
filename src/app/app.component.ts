@@ -17,20 +17,23 @@ export class AppComponent implements OnInit {
   public loading$ = this.store.select(fromSelectors.getLoading);
   public selectedMovies: MovieModel[];
   public message: string;
+  public scoredMovies: MovieModel[];
   constructor(private store: Store<fromStore.MoviesState>) {}
 
   public ngOnInit(): void {
     this.store.dispatch(new fromActions.MoviesGet());
     combineLatest(
       this.store.select(fromSelectors.getLoadingMessage),
-      this.store.select(fromSelectors.getAllMovies),
+      this.store.select(fromSelectors.getPopularMovies),
       this.store.select(fromSelectors.getSelectedMovies),
-      this.store.select(fromSelectors.getConfirmedSelection)
-    ).subscribe(([message, movies, selectedMovies, confirmed]) => {
+      this.store.select(fromSelectors.getConfirmedSelection),
+      this.store.select(fromSelectors.getScoredMovies)
+    ).subscribe(([message, movies, selectedMovies, confirmed, scored]) => {
       this.message = message;
       this.movies = movies;
       this.selectedMovies = selectedMovies;
       this.confirmed = confirmed;
+      this.scoredMovies = scored;
     });
   }
 
@@ -49,5 +52,9 @@ export class AppComponent implements OnInit {
     if (this.selectedMovies.length === 5) {
       this.store.dispatch(new fromActions.MoviesConfirmSelection());
     }
+  }
+
+  public restart(): void {
+    this.store.dispatch(new fromActions.MoviesRestart());
   }
 }

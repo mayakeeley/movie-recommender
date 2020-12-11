@@ -3,7 +3,8 @@ import { MovieModel } from '../../models/movie.model';
 
 export interface MoviesReducer {
   allMovies: MovieModel[];
-  moviesById: { [key: string]: MovieModel };
+  popularMovies: MovieModel[];
+  remainingMovies: MovieModel[];
   selectedMovies: MovieModel[];
   loading: boolean;
   loaded: boolean;
@@ -11,11 +12,13 @@ export interface MoviesReducer {
   confirmedSelection: boolean;
   keywords: { id: string; name: string; frequency: number }[];
   genres: { id: string; name: string; frequency: number }[];
+  scoredMovies: MovieModel[];
 }
 
 export const initialState: MoviesReducer = {
   allMovies: [],
-  moviesById: {},
+  popularMovies: [],
+  remainingMovies: [],
   selectedMovies: [],
   loading: false,
   loaded: false,
@@ -23,6 +26,7 @@ export const initialState: MoviesReducer = {
   confirmedSelection: false,
   keywords: undefined,
   genres: undefined,
+  scoredMovies: [],
 };
 
 export function reducer(
@@ -39,22 +43,16 @@ export function reducer(
       };
     }
     case fromMovies.MOVIES_GET_SUCCESS: {
-      const allMovies = action.payload;
-      const moviesById = allMovies
-        .filter((item) => item.id !== undefined)
-        .reduce((allData, data) => {
-          const { id, ...movieData } = data;
-          return {
-            ...allData,
-            [id]: movieData,
-          };
-        }, {});
+      const allMovies = action.payload
+        .slice()
+        .sort((a, b) => b.popularity - a.popularity);
+      const popularMovies = allMovies.slice(0, 24);
+      const remainingMovies = allMovies.slice(24);
       return {
         ...state,
-        allMovies: allMovies
-          .slice()
-          .sort((a, b) => b.popularity - a.popularity),
-        moviesById,
+        allMovies,
+        popularMovies,
+        remainingMovies,
         loading: false,
         loaded: true,
         message: undefined,
@@ -87,12 +85,31 @@ export function reducer(
       return {
         ...state,
         confirmedSelection: true,
+        loading: true,
+        loaded: false,
       };
     }
     case fromMovies.MOVIES_CONFIRM_SELECTION_SUCCESS: {
       return {
         ...state,
         ...action.payload,
+        loading: false,
+        loaded: true,
+      };
+    }
+    case fromMovies.MOVIES_RESTART: {
+      return {
+        allMovies: [],
+        popularMovies: [],
+        remainingMovies: [],
+        selectedMovies: [],
+        loading: false,
+        loaded: false,
+        message: undefined,
+        confirmedSelection: false,
+        keywords: undefined,
+        genres: undefined,
+        scoredMovies: [],
       };
     }
   }
@@ -100,10 +117,12 @@ export function reducer(
 }
 
 export const getAllMovies = (state: MoviesReducer) => state.allMovies;
-export const getMoviesById = (state: MoviesReducer) => state.moviesById;
 export const getLoading = (state: MoviesReducer) => state.loading;
-export const getLoaded = (state: MoviesReducer) => state.loaded;
 export const getLoadingMessage = (state: MoviesReducer) => state.message;
 export const getSelectedMovies = (state: MoviesReducer) => state.selectedMovies;
 export const getConfirmedSelection = (state: MoviesReducer) =>
   state.confirmedSelection;
+export const getPopularMovies = (state: MoviesReducer) => state.popularMovies;
+export const getRemainingMovies = (state: MoviesReducer) =>
+  state.remainingMovies;
+export const getScoredMovies = (state: MoviesReducer) => state.scoredMovies;
