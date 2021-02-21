@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
     margin: 20,
     mouseDrag: true,
     touchDrag: true,
+    autoHeight: true,
     responsive: {
       0: {
         items: 1,

@@ -78,16 +78,12 @@ $white: #ffffff;
     color: $white;
     font-size: 32px;
     margin: 0;
-    padding: 1em 0;
+    padding: 1em;
   }
   &__tiles {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
-    &__recommended {
-      flex: 0 0 25%;
-    }
   }
 
   &__tile {
@@ -95,7 +91,7 @@ $white: #ffffff;
     align-items: center;
     justify-content: flex-start;
     padding: 0.5em;
-    flex: 1 1 20%;
+    flex: 1 1 25%;
     border-radius: 1em;
     margin: 1.25em;
     background-color: $white;
@@ -110,7 +106,7 @@ $white: #ffffff;
 
     &__wrapper {
       align-self: flex-start;
-      width: 2em;
+      min-width: 1.75em;
     }
 
     &__unselected {
@@ -197,6 +193,11 @@ $white: #ffffff;
     &__tiles {
       width: 50%;
       align-self: center;
+
+
+      @media screen and (max-width: 768px) {
+        width: 100%;
+      }
     }
   }
 }
