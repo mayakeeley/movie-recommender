@@ -1,15 +1,40 @@
-$blue: #00bfff;
-$light-blue: #e5f9ff;
+$blue: #60a7fc;
+$light-blue: #b9d9ff;
 $gray: #f3f3f3;
+$darkGray: #212121;
 $black: #000000;
 $white: #ffffff;
 
+* {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  overflow-y: hidden;
+}
+
+:host ::ng-deep {
+  .owl-stage {
+    display: flex;
+  }
+
+  .owl-prev,
+  .owl-next {
+    display: inline-block;
+    color: $darkGray;
+    cursor: pointer;
+    background-color: $light-blue;
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    margin-top: 1em;
+  }
+
+  .owl-prev {
+    margin-right: 1em;
+  }
+}
+
 .recommender {
-  background-color: $black;
+  background-color: $darkGray;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   box-sizing: border-box;
 }
 
@@ -41,13 +66,23 @@ $white: #ffffff;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  &__selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
   &__title {
     color: $white;
+    font-size: 32px;
+    margin: 0;
+    padding: 1em 0;
   }
   &__tiles {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
 
     &__recommended {
@@ -57,24 +92,41 @@ $white: #ffffff;
 
   &__tile {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    flex: 0 0 25%;
-    border: 2px solid $blue;
+    justify-content: flex-start;
+    padding: 0.5em;
+    flex: 1 1 20%;
+    border-radius: 1em;
     margin: 1.25em;
-    padding: 1.25em;
-    background-color: $light-blue;
+    background-color: $white;
+    cursor: pointer;
 
-    &__selected {
-      background-color: $blue;
+    &__title {
+      width: 100%;
+      text-align: center;
+      padding: 1em 0.5em;
+      color: $darkGray;
+    }
+
+    &__wrapper {
+      align-self: flex-start;
+      width: 2em;
     }
 
     &__unselected {
-      cursor: pointer;
-      &:hover {
-        background-color: $blue;
-      }
+      height: 1.75em;
+      width: 1.75em;
+      border-radius: 50%;
+      background-color: $light-blue;
+    }
+
+    &__selected {
+      background-color: $blue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: 400;
     }
 
     &__remove {
@@ -88,14 +140,63 @@ $white: #ffffff;
     color: white;
     cursor: pointer;
     border: 1px solid $blue;
-    padding: 1.25em;
+    padding: 1em 2em;
     font-size: 1em;
     font-weight: 500;
-    margin-bottom: 1.25em;
+    margin: 1.25em 0;
+    border-radius: 1em;
 
     &__disabled {
       opacity: 0.7;
       cursor: not-allowed;
+    }
+  }
+
+  &__carousel {
+    &__title {
+      font-size: 1.75em;
+    }
+    &__text {
+      font-size: 1.5em;
+    }
+  }
+
+  &__recommended {
+    display: flex;
+    padding: 2em;
+    flex-direction: column;
+    text-align: center;
+    &__tile {
+      background-color: $white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 1em;
+      padding: 1em 2em;
+    }
+    &__title {
+      align-self: center;
+    }
+
+    &__button {
+      align-self: center;
+    }
+
+    &__remove {
+      background-color: $light-blue;
+      color: $darkGray;
+      text-decoration: underline;
+      border: 1px solid $light-blue;
+      cursor: pointer;
+      padding: 0.5em 1em;
+      font-weight: 500;
+      margin: 1.25em 0;
+      border-radius: 1em;
+    }
+
+    &__tiles {
+      width: 50%;
+      align-self: center;
     }
   }
 }

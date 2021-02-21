@@ -12,20 +12,22 @@ import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { effects } from './store/effects';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot(effects),
-    NoopAnimationsModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-  ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        HttpClientModule,
+        StoreModule.forRoot(reducers),
+        StoreDevtoolsModule.instrument(),
+        EffectsModule.forRoot(effects),
+        NoopAnimationsModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        CarouselModule,
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })

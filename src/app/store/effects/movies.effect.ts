@@ -77,7 +77,7 @@ export class MoviesEffect {
 
   public scoreMovies(movies, keywords, genres): MovieModel[] {
     return movies
-      .map((movie) => {
+      .map((movie, index) => {
         let score = 0;
         movie.keywords.forEach((keyword) => {
           const matchingKeyword = keywords.find(

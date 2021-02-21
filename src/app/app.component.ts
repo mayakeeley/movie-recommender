@@ -5,6 +5,7 @@ import * as fromActions from './store/actions';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { MovieModel } from './models/movie.model';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,18 @@ export class AppComponent implements OnInit {
   public selectedMovies: MovieModel[];
   public message: string;
   public scoredMovies: MovieModel[];
+  public customOptions: OwlOptions = {
+    center: true,
+    dots: true,
+    margin: 20,
+    mouseDrag: true,
+    touchDrag: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+    },
+  };
   constructor(private store: Store<fromStore.MoviesState>) {}
 
   public ngOnInit(): void {
@@ -62,5 +75,13 @@ export class AppComponent implements OnInit {
     const newMovieList = this.scoredMovies.slice();
     newMovieList.splice(index, 1);
     this.scoredMovies = newMovieList;
+  }
+
+  public movieGenres(genres: { id: number; name: string }[]): string {
+    return genres.map((genre) => genre.name).join(', ');
+  }
+
+  public getYear(date): number {
+    return new Date(date).getUTCFullYear();
   }
 }
