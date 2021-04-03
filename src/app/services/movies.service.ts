@@ -6,23 +6,23 @@ import {Observable} from 'rxjs';
   providedIn: 'root',
 })
 export class MoviesService {
-  public config: Observable<string>;
+  public config: Observable<{}>;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  public getMovies(): Observable<string> {
+  public getMovies(): Observable<{}> {
     const jsonFile = 'assets/tmdb_5000_movies.json';
-    return this.httpClient.get(jsonFile, {responseType: 'text'});
+    return this.httpClient.get(jsonFile);
   }
 
-  public getConfig(): Observable<string> {
+  public getConfig(): Observable<{}> {
     const config = 'assets/config.json';
-    this.config = this.httpClient.get(config, {responseType: 'text'});
+    this.config = this.httpClient.get(config);
     return this.config;
   }
 
-  public getConfigData(): Observable<string> {
+  public getConfigData(): Observable<{}> {
     if (!this.config) {
       return this.getConfig();
     } else {

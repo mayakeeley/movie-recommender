@@ -1,13 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as fromActions from '../actions';
 import * as fromSelectors from '../selectors';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { MoviesService } from '../../services/movies.service';
-import { Store } from '@ngrx/store';
-import { MoviesState } from '../reducers';
-import { MovieModel } from '../../models/movie.model';
+import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {MoviesService} from '../../services/movies.service';
+import {Store} from '@ngrx/store';
+import {MoviesState} from '../reducers';
+import {MovieModel, ConfigModel} from '../../models';
+import {NodeTypesEnum} from '../../enums';
+import {Router} from '@angular/router';
+import {TilesComponent} from '../../app/tiles/tiles.component';
+import {ResultsComponent} from '../../app/results/results.component';
 
 @Injectable()
 export class MoviesEffect {
@@ -17,8 +21,7 @@ export class MoviesEffect {
     switchMap(() => {
       return this.moviesService.getMovies().pipe(
         map((movies) => {
-          const allMovies = JSON.parse(movies);
-          return new fromActions.MoviesGetSuccess(allMovies);
+          return new fromActions.MoviesGetSuccess(movies);
         }),
         catchError((error) => of(new fromActions.MoviesGetFail(error)))
       );
@@ -52,11 +55,80 @@ export class MoviesEffect {
     })
   );
 
+  @Effect()
+  public startJourney$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_START),
+    switchMap(() => {
+      return this.moviesService.getConfigData().pipe(
+        map(tree => {
+          const currentStep = this.getCurrentStep(tree[0]);
+          this.addRoutes([currentStep]);
+          return new fromActions.MoviesStartSuccess(currentStep);
+        }),
+        catchError(error => of(new fromActions.MoviesStartFail(error)))
+      );
+    })
+  );
+
   constructor(
     private actions$: Actions,
     private moviesService: MoviesService,
-    private store: Store<MoviesState>
-  ) {}
+    private store: Store<MoviesState>,
+    private router: Router
+  ) {
+  }
+
+  public getCurrentStep(tree: ConfigModel): ConfigModel {
+    // create shallow copy of currentRoute up to the next valid question id
+    return {
+      ...tree,
+      children: tree.children
+        ? tree.children.map(child => {
+          return {
+            ...child,
+            children: child.children
+              ? child.children.map(grandchild => {
+                return {
+                  ...grandchild,
+                  children:
+                    grandchild.nodeType === NodeTypesEnum.outcome && grandchild.children
+                      ? grandchild.children.map(greatGrandChild => {
+                        return {
+                          ...greatGrandChild,
+                          children: undefined
+                        };
+                      })
+                      : undefined
+                };
+              })
+              : undefined
+          };
+        })
+        : undefined
+    };
+
+  }
+
+  public addRoutes(steps: ConfigModel[]): void {
+    this.router.config[0].children = this.createRoutes(steps);
+  }
+
+  private createRoutes(steps: ConfigModel[]): any {
+    return steps.map(step => {
+      if (step.nodeType === NodeTypesEnum.question) {
+        return {
+          path: step.nodeId,
+          component: TilesComponent
+        };
+      }
+      if (step.nodeType === NodeTypesEnum.results) {
+        return {
+          path: step.nodeId,
+          component: ResultsComponent
+        };
+      }
+    });
+  }
 
   public getFrequencyOfTerm(selectedMovies, term): any[] {
     const terms = [];
@@ -68,7 +140,7 @@ export class MoviesEffect {
         if (index !== -1) {
           terms[index].frequency += terms[index].frequency;
         } else {
-          terms.push({ ...item, frequency: 1 });
+          terms.push({...item, frequency: 1});
         }
       });
     });
