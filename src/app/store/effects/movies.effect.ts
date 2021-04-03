@@ -6,8 +6,8 @@ import {of} from 'rxjs';
 import {MoviesService} from '../../services/movies.service';
 import {Store} from '@ngrx/store';
 import {MoviesState} from '../reducers';
-import {ConfigModel, OutcomeModel} from '../../models';
-import {NodeTypesEnum} from '../../enums';
+import {ConfigModel, MovieModel, OutcomeModel} from '../../models';
+import {NodeTypesEnum, OutcomeTypesEnum} from '../../enums';
 import {Router} from '@angular/router';
 import {TilesComponent} from '../../app/recommender/components/tiles/tiles.component';
 import {ResultsComponent} from '../../app/recommender/components/results/results.component';
@@ -54,8 +54,9 @@ export class MoviesEffect {
           ];
 
           if (outcome) {
-            actionArray.push(new fromActions.MoviesSetOutcome({
-              [step.nodeId]: outcome
+            actionArray.push(new fromActions.MoviesAddOutcome({
+              ...outcome,
+              options: [{questionId: step.nodeId, ...outcome.options}]
             }));
           }
 
@@ -84,6 +85,100 @@ export class MoviesEffect {
       }
     }),
     catchError(error => of(new fromActions.MoviesPrevStepFail(error)))
+  );
+
+  @Effect()
+  public addOutcome$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_ADD_OUTCOME),
+    map((action: fromActions.MoviesAddOutcome) => action.payload),
+    withLatestFrom(this.store.select(fromSelectors.getMovieOutcomes)),
+    map(([newOutcome, outcomes]) => {
+
+      const newOutcomes = [...outcomes];
+
+      const existingOutcomeIndex = newOutcomes.findIndex(outcome => outcome.outcomeType === newOutcome.outcomeType);
+
+      if (existingOutcomeIndex === -1) {
+        newOutcomes.push(newOutcome);
+      }
+
+      if (existingOutcomeIndex !== -1) {
+        const existingOutcome = newOutcomes[existingOutcomeIndex];
+        newOutcomes[existingOutcomeIndex] = {
+          ...existingOutcome,
+          options: [...existingOutcome.options, ...newOutcome.options]
+        };
+      }
+
+      return new fromActions.MoviesAddOutcomeSuccess(newOutcomes);
+
+    }),
+    catchError(error => of(new fromActions.MoviesAddOutcomeFail(error)))
+  );
+
+  @Effect()
+  public removeOutcome$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_REMOVE_OUTCOME),
+    map((action: fromActions.MoviesRemoveOutcome) => action.payload),
+    withLatestFrom(this.store.select(fromSelectors.getMovieOutcomes)),
+    map(([questionId, outcomes]) => {
+
+      const newOutcomes = [...outcomes].map(outcome => {
+        const options = outcome.options.filter(option => option.questionId !== questionId);
+        return {
+          ...outcome,
+          options
+        };
+      });
+
+      return new fromActions.MoviesRemoveOutcomeSuccess(newOutcomes);
+
+    }),
+    catchError(error => of(new fromActions.MoviesRemoveOutcomeFail(error)))
+  );
+
+  @Effect()
+  public getRecommended$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_GET_RECOMMENDED),
+    withLatestFrom(
+      this.store.select(fromSelectors.getMovieOutcomes),
+    ),
+    switchMap(([never, outcomes]) => {
+      return this.moviesService.getMovieData().pipe(
+        map(movies => {
+          let recommendedMovies: MovieModel[] = [...movies];
+          outcomes.forEach(outcome => {
+
+            if (outcome.outcomeType === OutcomeTypesEnum.genres) {
+              outcome.options.forEach(option => {
+                recommendedMovies = recommendedMovies.filter(movie => movie.genres.find(genre => genre.id === option.value));
+              });
+            }
+
+            if (outcome.outcomeType === OutcomeTypesEnum.budget) {
+              outcome.options.forEach(option => {
+                recommendedMovies = recommendedMovies.filter(movie => {
+                  if (option.min) {
+                    if (option.max) {
+                      return +movie.budget > option.min && +movie.budget < option.max;
+                    } else {
+                      return +movie.budget > option.min;
+                    }
+                  }
+
+                  if (option.max) {
+                    return +movie.budget < option.max;
+                  }
+                });
+              });
+            }
+          });
+          recommendedMovies = recommendedMovies.sort(() => Math.random() - 0.5).slice(0, 9);
+          return new fromActions.MoviesGetRecommendedSuccess(recommendedMovies);
+        }),
+        catchError(error => of(new fromActions.MoviesNextStepFail(error)))
+      );
+    })
   );
 
   @Effect({dispatch: false})

@@ -18,8 +18,11 @@ export interface QuestionModel {
 
 export interface OutcomeModel {
   outcomeType: OutcomeTypesEnum;
-  genreOutcome?: number;
-  budgetOutcome?: number;
-  budgetOutcomeMin?: number;
-  budgetOutcomeMax?: number;
+  options?: {
+    value?: number;
+    max?: number;
+    min?: number;
+    questionId?: string;
+  }[];
+
 }

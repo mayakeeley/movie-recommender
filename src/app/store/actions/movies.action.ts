@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {ConfigModel, OutcomeModel} from '../../models';
+import {ConfigModel, MovieModel, OutcomeModel} from '../../models';
 import {NavigationExtras} from '@angular/router';
 
 export const MOVIES_START = '[Movies] start';
@@ -16,9 +16,18 @@ export const MOVIES_PREV_STEP = '[Movies] prev step';
 export const MOVIES_PREV_STEP_SUCCESS = '[Movies] prev step success';
 export const MOVIES_PREV_STEP_FAIL = '[Movies] prev step fail';
 
-export const MOVIES_SET_OUTCOME = '[Movies] set outcome';
+export const MOVIES_ADD_OUTCOME = '[Movies] add outcome';
+export const MOVIES_ADD_OUTCOME_SUCCESS = '[Movies] add outcome success';
+export const MOVIES_ADD_OUTCOME_FAIL = '[Movies] add outcome fail';
 
 export const MOVIES_REMOVE_OUTCOME = '[Movies] remove outcome';
+export const MOVIES_REMOVE_OUTCOME_SUCCESS = '[Movies] remove outcome success';
+export const MOVIES_REMOVE_OUTCOME_FAIL = '[Movies] remove outcome fail';
+
+export const MOVIES_GET_RECOMMENDED = '[Movies] get recommended';
+export const MOVIES_GET_RECOMMENDED_SUCCESS = '[Movies] get recommended success';
+export const MOVIES_GET_RECOMMENDED_FAIL = '[Movies] get recommended fail';
+
 
 export class MoviesStart implements Action {
   public readonly type = MOVIES_START;
@@ -78,10 +87,24 @@ export class MoviesPrevStepFail implements Action {
   }
 }
 
-export class MoviesSetOutcome implements Action {
-  public readonly type = MOVIES_SET_OUTCOME;
+export class MoviesAddOutcome implements Action {
+  public readonly type = MOVIES_ADD_OUTCOME;
 
-  constructor(public payload: { [key: string]: OutcomeModel }) {
+  constructor(public payload: OutcomeModel) {
+  }
+}
+
+export class MoviesAddOutcomeSuccess implements Action {
+  public readonly type = MOVIES_ADD_OUTCOME_SUCCESS;
+
+  constructor(public payload: OutcomeModel[]) {
+  }
+}
+
+export class MoviesAddOutcomeFail implements Action {
+  public readonly type = MOVIES_ADD_OUTCOME_FAIL;
+
+  constructor(public payload: any) {
   }
 }
 
@@ -92,14 +115,42 @@ export class MoviesRemoveOutcome implements Action {
   }
 }
 
+export class MoviesRemoveOutcomeSuccess implements Action {
+  public readonly type = MOVIES_REMOVE_OUTCOME_SUCCESS;
+
+  constructor(public payload: OutcomeModel[]) {
+  }
+}
+
+export class MoviesRemoveOutcomeFail implements Action {
+  public readonly type = MOVIES_REMOVE_OUTCOME_FAIL;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class MoviesGetRecommended implements Action {
+  public readonly type = MOVIES_GET_RECOMMENDED;
+}
+
+export class MoviesGetRecommendedSuccess implements Action {
+  public readonly type = MOVIES_GET_RECOMMENDED_SUCCESS;
+
+  constructor(public payload: MovieModel[]) {
+  }
+}
+
+export class MoviesGetRecommendedFail implements Action {
+  public readonly type = MOVIES_GET_RECOMMENDED_FAIL;
+
+  constructor(public payload: any) {
+  }
+}
+
 export class MoviesNavigate implements Action {
   public readonly type = MOVIES_NAVIGATE;
 
-  constructor(public payload: {
-    path: any[];
-    query?: object;
-    extras?: NavigationExtras;
-  }) {
+  constructor(public payload: { path: any[]; query?: object; extras?: NavigationExtras; }) {
   }
 }
 
@@ -112,5 +163,12 @@ export type MoviesAction = MoviesStart
   | MoviesPrevStep
   | MoviesPrevStepSuccess
   | MoviesPrevStepFail
-  | MoviesSetOutcome
-  | MoviesRemoveOutcome;
+  | MoviesAddOutcome
+  | MoviesAddOutcomeSuccess
+  | MoviesAddOutcomeFail
+  | MoviesRemoveOutcome
+  | MoviesRemoveOutcomeSuccess
+  | MoviesRemoveOutcomeFail
+  | MoviesGetRecommended
+  | MoviesGetRecommendedSuccess
+  | MoviesGetRecommendedFail;

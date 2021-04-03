@@ -7,3 +7,5 @@ export const getStepNumber = createSelector(getMovies, fromMovies.getStepNumber)
 export const getCurrentStep = createSelector(getMovies, fromMovies.getCurrentStep);
 export const getSuggestedMovies = createSelector(getMovies, fromMovies.getSuggestedMovies);
 export const getMovieOutcomes = createSelector(getMovies, fromMovies.getMovieOutcomes);
+export const getLoaded = createSelector(getMovies, fromMovies.getLoaded);
+export const getLoading = createSelector(getMovies, fromMovies.getLoading);

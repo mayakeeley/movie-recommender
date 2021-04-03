@@ -7,13 +7,23 @@ import {Observable} from 'rxjs';
 })
 export class MoviesService {
   public config: Observable<{}>;
+  public movies: Observable<any>;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  public getMovies(): Observable<{}> {
+  public getMovies(): Observable<any> {
     const jsonFile = 'assets/tmdb_5000_movies.json';
-    return this.httpClient.get(jsonFile);
+    this.movies = this.httpClient.get(jsonFile);
+    return this.movies;
+  }
+
+  public getMovieData(): Observable<any> {
+    if (!this.movies) {
+      return this.getMovies();
+    } else {
+      return this.movies;
+    }
   }
 
   public getConfig(): Observable<{}> {
