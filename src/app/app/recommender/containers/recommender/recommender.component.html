@@ -1,6 +1,6 @@
-<div>
-  <h3 *ngIf="isFirstRoute">Movie Recommender</h3>
-  <h5 *ngIf="stepData?.questionText">{{stepData.questionText}}</h5>
+<div class="recommender">
+  <h1 *ngIf="isFirstRoute">Movie Recommender</h1>
+  <h3 *ngIf="stepData?.questionText">{{stepData.questionText}}</h3>
   <router-outlet></router-outlet>
   <button (click)="back()" *ngIf="!isFirstRoute">Back</button>
 </div>

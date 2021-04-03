@@ -17,7 +17,7 @@ import {RecommenderModule} from './app/recommender/recommender.module';
 
 export const ROUTES: Routes = [
   {
-    path: '',
+    path: '**',
     redirectTo: 'recommender',
     pathMatch: 'full',
   },
