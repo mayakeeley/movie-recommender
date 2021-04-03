@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as fromStore from './store';
 import * as fromSelectors from './store/selectors';
 import * as fromActions from './store/actions';
-import { Store } from '@ngrx/store';
-import { combineLatest } from 'rxjs';
-import { MovieModel } from './models/movie.model';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import {Store} from '@ngrx/store';
+import {combineLatest} from 'rxjs';
+import {MovieModel} from './models/movie.model';
+import {OwlOptions} from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +32,9 @@ export class AppComponent implements OnInit {
       },
     },
   };
-  constructor(private store: Store<fromStore.MoviesState>) {}
+
+  constructor(private store: Store<fromStore.MoviesState>) {
+  }
 
   public ngOnInit(): void {
     this.store.dispatch(new fromActions.MoviesGet());

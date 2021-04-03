@@ -1,0 +1,108 @@
+[
+  {
+    "nodeType": "question",
+    "nodeId": "74385226-9477-11eb-a8b3-0242ac130003",
+    "data": {
+      "questionText": "What genre do you like?"
+    },
+    "children": [
+      {
+        "nodeType": "answer",
+        "nodeId": "743854ce-9477-11eb-a8b3-0242ac130003",
+        "data": {
+          "answerText": "Action"
+        },
+        "children": [
+          {
+            "nodeType": "outcome",
+            "nodeId": "74385780-9477-11eb-a8b3-0242ac130003",
+            "data": {
+              "outcomeType": "genreOutcome",
+              "genreOutcome": "action"
+            },
+            "children": [
+              {
+                "nodeType": "question",
+                "nodeId": "7438583e-9477-11eb-a8b3-0242ac130003",
+                "data": {
+                  "questionText": "Do you prefer blockbusters or indie films?"
+                },
+                "children": [
+                  {
+                    "nodeType": "answer",
+                    "nodeId": "743859ec-9477-11eb-a8b3-0242ac130003",
+                    "data": {
+                      "answerText": "Blockbuster"
+                    },
+                    "children": [
+                      {
+                        "nodeType": "outcome",
+                        "nodeId": "74385e6a-9477-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "outcomeType": "budgetOutcome",
+                          "budgetOutcomeMin": 200000
+                        },
+                        "children": [
+                          {
+                            "nodeType": "results",
+                            "nodeId": "74385f1e-9477-11eb-a8b3-0242ac130003"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nodeType": "answer",
+                    "nodeId": "74385aaa-9477-11eb-a8b3-0242ac130003",
+                    "data": {
+                      "answerText": "Indie"
+                    },
+                    "children": [
+                      {
+                        "nodeType": "outcome",
+                        "nodeId": "74385e6a-9477-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "outcomeType": "budgetOutcome",
+                          "budgetOutcomeMax": 200000
+                        },
+                        "children": [
+                          {
+                            "nodeType": "results",
+                            "nodeId": "7438602c-9477-11eb-a8b3-0242ac130003"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nodeType": "answer",
+        "nodeId": "74385622-9477-11eb-a8b3-0242ac130003",
+        "data": {
+          "answerText": "Crime"
+        },
+        "children": [
+          {
+            "nodeType": "outcome",
+            "nodeId": "74385780-9477-11eb-a8b3-0242ac130003",
+            "data": {
+              "outcomeType": "genreOutcome",
+              "genreOutcome": "crime"
+            },
+            "children": [
+              {
+                "nodeType": "results",
+                "nodeId": "74385d34-9477-11eb-a8b3-0242ac130003"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

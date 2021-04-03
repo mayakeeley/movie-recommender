@@ -13,9 +13,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { effects } from './store/effects';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {CarouselModule} from 'ngx-owl-carousel-o';
+import { AppTilesComponent } from './app/app-tiles/app-tiles.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AppTilesComponent],
     imports: [
         BrowserModule,
         CommonModule,
