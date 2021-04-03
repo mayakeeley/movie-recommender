@@ -1,3 +1,4 @@
-<div *ngIf="movies.length">
+<div *ngIf="(loaded | async) && !(loading | async)">
   <div *ngFor="let movie of movies">{{movie.title}}</div>
 </div>
+<app-loader *ngIf="(loading | async)"></app-loader>
