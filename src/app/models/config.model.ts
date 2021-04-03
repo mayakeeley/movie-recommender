@@ -17,7 +17,7 @@ export interface QuestionModel {
 
 export interface OutcomeModel {
   outcomeType: string;
-  genreOutcome?: string[];
+  genreOutcome?: number[];
   budgetOutcomeMin?: number;
   budgetOutcomeMax?: number;
 }

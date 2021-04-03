@@ -63,14 +63,15 @@ export class MoviesEffect {
     ofType(fromActions.MOVIES_PREV_STEP),
     withLatestFrom(this.store.select(fromSelectors.getSteps)),
     switchMap(([never, steps]) => {
-      const currentStep = steps[steps.length - 2];
-
-      return [
-        new fromActions.MoviesPrevStepSuccess(currentStep),
-        new fromActions.MoviesNavigate({
-          path: [`recommender/${currentStep.nodeId}`]
-        })
-      ];
+      const prevStep = steps[steps.length - 2];
+      if (prevStep) {
+        return [
+          new fromActions.MoviesPrevStepSuccess(prevStep),
+          new fromActions.MoviesNavigate({
+            path: [`recommender/${prevStep.nodeId}`]
+          })
+        ];
+      }
     }),
     catchError(error => of(new fromActions.MoviesPrevStepFail(error)))
   );
