@@ -12,21 +12,19 @@ import {reducers, effects} from './store';
 import {EffectsModule} from '@ngrx/effects';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CarouselModule} from 'ngx-owl-carousel-o';
-import {TilesComponent} from './app/tiles/tiles.component';
 import {RouterModule, Routes} from '@angular/router';
-import { ResultsComponent } from './app/results/results.component';
+import {RecommenderModule} from './app/recommender/recommender.module';
 
 export const ROUTES: Routes = [
   {
     path: '',
-    component: AppComponent,
-    canActivateChild: [],
-    children: [{path: '**', component: TilesComponent}]
-  }
+    redirectTo: 'recommender',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
-  declarations: [AppComponent, TilesComponent, ResultsComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -38,7 +36,8 @@ export const ROUTES: Routes = [
     MatAutocompleteModule,
     MatFormFieldModule,
     CarouselModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    RecommenderModule
   ],
   providers: [],
   bootstrap: [AppComponent],

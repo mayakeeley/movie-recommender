@@ -1,130 +1,56 @@
 import * as fromMovies from '../actions/movies.action';
-import { MovieModel } from '../../models/movie.model';
+import {ConfigModel, MovieModel} from '../../models';
 
 export interface MoviesReducer {
-  allMovies: MovieModel[];
-  popularMovies: MovieModel[];
-  remainingMovies: MovieModel[];
-  selectedMovies: MovieModel[];
+  steps: ConfigModel[];
+  stepNumber: number;
+  currentStep: ConfigModel;
+  suggestedMovies: MovieModel[];
   loading: boolean;
   loaded: boolean;
-  message: string;
-  confirmedSelection: boolean;
-  keywords: { id: string; name: string; frequency: number }[];
-  genres: { id: string; name: string; frequency: number }[];
-  scoredMovies: MovieModel[];
 }
 
 export const initialState: MoviesReducer = {
-  allMovies: [],
-  popularMovies: [],
-  remainingMovies: [],
-  selectedMovies: [],
+  steps: [],
+  stepNumber: 0,
+  currentStep: undefined,
+  suggestedMovies: [],
   loading: false,
-  loaded: false,
-  message: undefined,
-  confirmedSelection: false,
-  keywords: undefined,
-  genres: undefined,
-  scoredMovies: [],
+  loaded: false
 };
 
-export function reducer(
-  state = initialState,
-  action: fromMovies.MoviesAction
-): MoviesReducer {
+export function reducer(state = initialState, action: fromMovies.MoviesAction): MoviesReducer {
   switch (action.type) {
-    case fromMovies.MOVIES_GET: {
+    case fromMovies.MOVIES_START: {
       return {
         ...state,
         loading: true,
-        loaded: false,
-        message: 'Fetching movie data',
+        loaded: false
       };
     }
-    case fromMovies.MOVIES_GET_SUCCESS: {
-      const allMovies = action.payload
-        .slice()
-        .sort((a, b) => b.popularity - a.popularity);
-      const popularMovies = allMovies.slice(0, 24);
-      const remainingMovies = allMovies.slice(24);
+    case fromMovies.MOVIES_START_SUCCESS: {
       return {
         ...state,
-        allMovies,
-        popularMovies,
-        remainingMovies,
+        currentStep: action.payload,
+        steps: [action.payload],
         loading: false,
-        loaded: true,
-        message: undefined,
+        loaded: true
       };
     }
-    case fromMovies.MOVIES_GET_FAIL: {
+    case fromMovies.MOVIES_START_FAIL: {
       return {
         ...state,
         loading: false,
-        loaded: false,
-        message: 'Looks like something went wrong',
-      };
-    }
-    case fromMovies.MOVIES_SELECT: {
-      return {
-        ...state,
-        selectedMovies: [...state.selectedMovies.concat(action.payload)],
-      };
-    }
-    case fromMovies.MOVIES_DESELECT: {
-      const index = state.selectedMovies.indexOf(action.payload);
-      const newArr = [...state.selectedMovies];
-      newArr.splice(index, 1);
-      return {
-        ...state,
-        selectedMovies: newArr,
-      };
-    }
-    case fromMovies.MOVIES_CONFIRM_SELECTION: {
-      return {
-        ...state,
-        confirmedSelection: true,
-        loading: true,
-        loaded: false,
-        message: 'Recommending movies for you',
-      };
-    }
-    case fromMovies.MOVIES_CONFIRM_SELECTION_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-        loading: false,
-        loaded: true,
-        message: undefined
-      };
-    }
-    case fromMovies.MOVIES_RESTART: {
-      return {
-        allMovies: [],
-        popularMovies: [],
-        remainingMovies: [],
-        selectedMovies: [],
-        loading: false,
-        loaded: false,
-        message: undefined,
-        confirmedSelection: false,
-        keywords: undefined,
-        genres: undefined,
-        scoredMovies: [],
+        loaded: false
       };
     }
   }
   return state;
 }
 
-export const getAllMovies = (state: MoviesReducer) => state.allMovies;
+export const getSteps = (state: MoviesReducer) => state.steps;
+export const getStepNumber = (state: MoviesReducer) => state.stepNumber;
+export const getCurrentStep = (state: MoviesReducer) => state.currentStep;
+export const getSuggestedMovies = (state: MoviesReducer) => state.suggestedMovies;
 export const getLoading = (state: MoviesReducer) => state.loading;
-export const getLoadingMessage = (state: MoviesReducer) => state.message;
-export const getSelectedMovies = (state: MoviesReducer) => state.selectedMovies;
-export const getConfirmedSelection = (state: MoviesReducer) =>
-  state.confirmedSelection;
-export const getPopularMovies = (state: MoviesReducer) => state.popularMovies;
-export const getRemainingMovies = (state: MoviesReducer) =>
-  state.remainingMovies;
-export const getScoredMovies = (state: MoviesReducer) => state.scoredMovies;
+export const getLoaded = (state: MoviesReducer) => state.loaded;
