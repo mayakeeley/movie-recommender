@@ -10,6 +10,7 @@ import {effects, reducers} from '../../store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {StoreModule} from '@ngrx/store';
 import {NgModule} from '@angular/core';
+import { LoaderComponent } from './components/loader/loader.component';
 
 export const ROUTES: Routes = [
   {
@@ -21,7 +22,7 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [TilesComponent, ResultsComponent, RecommenderComponent],
+  declarations: [TilesComponent, ResultsComponent, RecommenderComponent, LoaderComponent],
   imports: [
     BrowserModule,
     CommonModule,

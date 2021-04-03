@@ -1,0 +1,10 @@
+$gray: gray;
+
+.loader {
+  border: 1em solid $gray;
+  border-top: 1em solid $blue;
+  border-radius: 50%;
+  width: 7.5em;
+  height: 7.5em;
+  animation: spin 2s linear infinite;
+}
