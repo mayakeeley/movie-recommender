@@ -1,14 +1,15 @@
-import {NodeTypesEnum} from '../enums/node-types.enum';
+import {NodeTypesEnum, OutcomeTypesEnum} from '../enums';
 
 export interface ConfigModel {
   nodeType: NodeTypesEnum;
   nodeId: string;
-  data?: AnswerModel | QuestionModel | OutcomeModel;
+  data?: AnswerModel | QuestionModel;
   children: ConfigModel[];
 }
 
 export interface AnswerModel {
   answerText: string;
+  outcome?: OutcomeModel;
 }
 
 export interface QuestionModel {
@@ -16,8 +17,9 @@ export interface QuestionModel {
 }
 
 export interface OutcomeModel {
-  outcomeType: string;
-  genreOutcome?: number[];
+  outcomeType: OutcomeTypesEnum;
+  genreOutcome?: number;
+  budgetOutcome?: number;
   budgetOutcomeMin?: number;
   budgetOutcomeMax?: number;
 }

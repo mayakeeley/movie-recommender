@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {ConfigModel} from '../../models';
+import {ConfigModel, OutcomeModel} from '../../models';
 import {NavigationExtras} from '@angular/router';
 
 export const MOVIES_START = '[Movies] start';
@@ -16,6 +16,9 @@ export const MOVIES_PREV_STEP = '[Movies] prev step';
 export const MOVIES_PREV_STEP_SUCCESS = '[Movies] prev step success';
 export const MOVIES_PREV_STEP_FAIL = '[Movies] prev step fail';
 
+export const MOVIES_SET_OUTCOME = '[Movies] set outcome';
+
+export const MOVIES_REMOVE_OUTCOME = '[Movies] remove outcome';
 
 export class MoviesStart implements Action {
   public readonly type = MOVIES_START;
@@ -75,6 +78,20 @@ export class MoviesPrevStepFail implements Action {
   }
 }
 
+export class MoviesSetOutcome implements Action {
+  public readonly type = MOVIES_SET_OUTCOME;
+
+  constructor(public payload: { [key: string]: OutcomeModel }) {
+  }
+}
+
+export class MoviesRemoveOutcome implements Action {
+  public readonly type = MOVIES_REMOVE_OUTCOME;
+
+  constructor(public payload: string) {
+  }
+}
+
 export class MoviesNavigate implements Action {
   public readonly type = MOVIES_NAVIGATE;
 
@@ -94,4 +111,6 @@ export type MoviesAction = MoviesStart
   | MoviesNextStepFail
   | MoviesPrevStep
   | MoviesPrevStepSuccess
-  | MoviesPrevStepFail;
+  | MoviesPrevStepFail
+  | MoviesSetOutcome
+  | MoviesRemoveOutcome;

@@ -6,7 +6,7 @@ import {of} from 'rxjs';
 import {MoviesService} from '../../services/movies.service';
 import {Store} from '@ngrx/store';
 import {MoviesState} from '../reducers';
-import {ConfigModel} from '../../models';
+import {ConfigModel, OutcomeModel} from '../../models';
 import {NodeTypesEnum} from '../../enums';
 import {Router} from '@angular/router';
 import {TilesComponent} from '../../app/recommender/components/tiles/tiles.component';
@@ -41,17 +41,25 @@ export class MoviesEffect {
     switchMap(([value, step, prevSteps]) => {
       return this.moviesService.getConfigData().pipe(
         switchMap(tree => {
-          const nextStep = this.getNextStep(step, tree, value);
+          const {nextStep, outcome} = this.getNextStep(step, tree, value);
           const steps = prevSteps.concat(nextStep);
 
           this.addRoutes(steps);
 
-          return [
+          const actionArray: any[] = [
             new fromActions.MoviesNextStepSuccess(nextStep),
             new fromActions.MoviesNavigate({
               path: [`recommender/${nextStep.nodeId}`]
             })
           ];
+
+          if (outcome) {
+            actionArray.push(new fromActions.MoviesSetOutcome({
+              [step.nodeId]: outcome
+            }));
+          }
+
+          return actionArray;
         }),
         catchError(error => of(new fromActions.MoviesNextStepFail(error)))
       );
@@ -64,9 +72,11 @@ export class MoviesEffect {
     withLatestFrom(this.store.select(fromSelectors.getSteps)),
     switchMap(([never, steps]) => {
       const prevStep = steps[steps.length - 2];
+
       if (prevStep) {
         return [
           new fromActions.MoviesPrevStepSuccess(prevStep),
+          new fromActions.MoviesRemoveOutcome(prevStep.nodeId),
           new fromActions.MoviesNavigate({
             path: [`recommender/${prevStep.nodeId}`]
           })
@@ -93,8 +103,6 @@ export class MoviesEffect {
   ) {
   }
 
-
-  // look at improving this - must be a better way to do this
   public getCurrentStep(tree: ConfigModel): ConfigModel {
     // create shallow copy of currentRoute up to the next valid question id
     return {
@@ -107,15 +115,7 @@ export class MoviesEffect {
               ? child.children.map(grandchild => {
                 return {
                   ...grandchild,
-                  children:
-                    grandchild.nodeType === NodeTypesEnum.outcome && grandchild.children
-                      ? grandchild.children.map(greatGrandChild => {
-                        return {
-                          ...greatGrandChild,
-                          children: undefined
-                        };
-                      })
-                      : undefined
+                  children: undefined
                 };
               })
               : undefined
@@ -150,15 +150,21 @@ export class MoviesEffect {
     });
   }
 
-  private getNextStep(currentRoute, config, value): ConfigModel {
+  private getNextStep(currentRoute, config, value): { nextStep: ConfigModel, outcome: OutcomeModel } {
     // find the corresponding child answer
     const childNode = currentRoute.children.find(child => child.nodeId === value);
 
     // get the next question or preset node Id
     const nodeId = this.getNextNodeId(childNode);
 
+    // check for an outcome
+    let outcome;
+    if (childNode.data.outcome) {
+      outcome = childNode.data.outcome;
+    }
+
     // find the node in the config and return the current step
-    return this.getNodeById(config, nodeId);
+    return {nextStep: this.getNodeById(config, nodeId), outcome};
   }
 
   private getNextNodeId(node): string {
