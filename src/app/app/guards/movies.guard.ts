@@ -42,16 +42,17 @@ export class MoviesGuard implements CanActivateChild {
             })
           );
         }
-        // else {
-        //   if (step !== requestedPath) {
-        //     const prevStepPath = steps[steps.length - 2].nodeId;
-        //     if (requestedPath === prevStepPath) {
-        //       this.store.dispatch(new fromActions.MoviesPrevStep());
-        //     } else {
-        //       this.store.dispatch(new fromActions.MoviesNextStep());
-        //     }
-        //   }
-        // }
+        else {
+          if (step !== requestedPath) {
+            const prevStepPath = steps[steps.length - 2].nodeId;
+            if (requestedPath === prevStepPath) {
+              // this.store.dispatch(new fromActions.MoviesPrevStep());
+            }
+            else {
+              // this.store.dispatch(new fromActions.MoviesNextStep());
+            }
+          }
+        }
 
         this.firstInit = false;
         return of(true);

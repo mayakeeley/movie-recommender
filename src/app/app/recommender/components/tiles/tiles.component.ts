@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ConfigModel} from '../../../../models';
 import * as fromSelectors from '../../../../store/selectors';
 import * as fromStore from '../../../../store';
+import * as fromActions from '../../../../store/actions';
 import {Store} from '@ngrx/store';
 
 @Component({
@@ -28,8 +29,8 @@ export class TilesComponent implements OnInit {
     });
   }
 
-  public selectAnswer(option): void {
-
+  public selectAnswer(answerNodeId): void {
+    this.store.dispatch(new fromActions.MoviesNextStep(answerNodeId));
   }
 
 }

@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as fromActions from '../actions';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {MoviesService} from '../../services/movies.service';
 import {Store} from '@ngrx/store';
 import {MoviesState} from '../reducers';
-import {MovieModel, ConfigModel} from '../../models';
+import {ConfigModel} from '../../models';
 import {NodeTypesEnum} from '../../enums';
 import {Router} from '@angular/router';
 import {TilesComponent} from '../../app/recommender/components/tiles/tiles.component';
 import {ResultsComponent} from '../../app/recommender/components/results/results.component';
+import * as fromSelectors from '../selectors';
 
 @Injectable()
 export class MoviesEffect {
@@ -27,6 +28,51 @@ export class MoviesEffect {
         catchError(error => of(new fromActions.MoviesStartFail(error)))
       );
     })
+  );
+
+  @Effect()
+  public nextStep$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_NEXT_STEP),
+    map((action: fromActions.MoviesNextStep) => action.payload),
+    withLatestFrom(
+      this.store.select(fromSelectors.getCurrentStep),
+      this.store.select(fromSelectors.getSteps),
+    ),
+    switchMap(([value, step, prevSteps]) => {
+      return this.moviesService.getConfigData().pipe(
+        switchMap(tree => {
+          const nextStep = this.getNextStep(step, tree, value);
+          const steps = prevSteps.concat(nextStep);
+
+          this.addRoutes(steps);
+
+          return [
+            new fromActions.MoviesNextStepSuccess(nextStep),
+            new fromActions.MoviesNavigate({
+              path: [`recommender/${nextStep.nodeId}`]
+            })
+          ];
+        }),
+        catchError(error => of(new fromActions.MoviesNextStepFail(error)))
+      );
+    })
+  );
+
+  @Effect()
+  public prevStep$ = this.actions$.pipe(
+    ofType(fromActions.MOVIES_PREV_STEP),
+    withLatestFrom(this.store.select(fromSelectors.getSteps)),
+    switchMap(([never, steps]) => {
+      const currentStep = steps[steps.length - 2];
+
+      return [
+        new fromActions.MoviesPrevStepSuccess(currentStep),
+        new fromActions.MoviesNavigate({
+          path: [`recommender/${currentStep.nodeId}`]
+        })
+      ];
+    }),
+    catchError(error => of(new fromActions.MoviesPrevStepFail(error)))
   );
 
   @Effect({dispatch: false})
@@ -46,6 +92,8 @@ export class MoviesEffect {
   ) {
   }
 
+
+  // look at improving this - must be a better way to do this
   public getCurrentStep(tree: ConfigModel): ConfigModel {
     // create shallow copy of currentRoute up to the next valid question id
     return {
@@ -101,46 +149,42 @@ export class MoviesEffect {
     });
   }
 
-  public getFrequencyOfTerm(selectedMovies, term): any[] {
-    const terms = [];
-    selectedMovies.forEach((movie) => {
-      movie[term].forEach((item) => {
-        const index = terms.findIndex((termItem) => {
-          return termItem.id === item.id;
-        });
-        if (index !== -1) {
-          terms[index].frequency += terms[index].frequency;
-        } else {
-          terms.push({...item, frequency: 1});
-        }
-      });
-    });
-    return terms;
+  private getNextStep(currentRoute, config, value): ConfigModel {
+    // find the corresponding child answer
+    const childNode = currentRoute.children.find(child => child.nodeId === value);
+
+    // get the next question or preset node Id
+    const nodeId = this.getNextNodeId(childNode);
+
+    // find the node in the config and return the current step
+    return this.getNodeById(config, nodeId);
   }
 
-  public scoreMovies(movies, keywords, genres): MovieModel[] {
-    return movies
-      .map((movie, index) => {
-        let score = 0;
-        movie.keywords.forEach((keyword) => {
-          const matchingKeyword = keywords.find(
-            (item) => item.id === keyword.id
-          );
-          if (matchingKeyword) {
-            score = score + matchingKeyword.frequency;
-          }
-        });
-        movie.genres.forEach((genre) => {
-          const matchingGenre = genres.find((item) => item.id === genre.id);
-          if (matchingGenre) {
-            score = score + matchingGenre.frequency;
-          }
-        });
-        return {
-          ...movie,
-          score,
-        };
-      })
-      .sort((a, b) => b.score - a.score);
+  private getNextNodeId(node): string {
+    // check if node is a question or preset, if not, go to the next child and repeat until you find a question or preset
+    let result = null;
+    if (node.nodeType === NodeTypesEnum.results || node.nodeType === NodeTypesEnum.question) {
+      return node.nodeId;
+    } else {
+      if (node.children) {
+        result = this.getNextNodeId(node.children[0]);
+      }
+      return result;
+    }
+  }
+
+  private getNodeById(tree, nodeId): ConfigModel {
+    // traverse config tree until node id matches the node, return that as the current step
+    let result = null;
+    tree.forEach(node => {
+      if (nodeId === node.nodeId) {
+        result = this.getCurrentStep(node);
+      } else if (!result) {
+        if (node.children) {
+          result = this.getNodeById(node.children, nodeId);
+        }
+      }
+    });
+    return result;
   }
 }

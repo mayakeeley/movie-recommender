@@ -44,6 +44,49 @@ export function reducer(state = initialState, action: fromMovies.MoviesAction): 
         loaded: false
       };
     }
+    case fromMovies.MOVIES_NEXT_STEP: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    }
+    case fromMovies.MOVIES_NEXT_STEP_SUCCESS: {
+      return {
+        ...state,
+        steps: [...state.steps, action.payload],
+        stepNumber: state.stepNumber + 1,
+        currentStep: action.payload,
+        loading: false,
+        loaded: true
+      };
+    }
+    case fromMovies.MOVIES_NEXT_STEP_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false
+      };
+    }
+    case fromMovies.MOVIES_PREV_STEP: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    }
+    case fromMovies.MOVIES_PREV_STEP_SUCCESS: {
+      const steps = [...state.steps];
+      steps.pop();
+      return {
+        ...state,
+        steps,
+        currentStep: action.payload,
+        stepNumber: state.stepNumber >= 1 ? state.stepNumber - 1 : 0,
+        loading: false,
+        loaded: true,
+      };
+    }
   }
   return state;
 }
