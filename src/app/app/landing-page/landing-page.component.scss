@@ -1,0 +1,46 @@
+$blue: #60a7fc;
+$light-blue: #b9d9ff;
+$gray: #f3f3f3;
+$dark-gray: #212121;
+$black: #000000;
+$white: #ffffff;
+
+
+.landing {
+  background-color: $light-blue;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__title {
+    margin: 0;
+    padding: 2em 0;
+    font-size: 3em;
+    text-align: center;
+  }
+
+  &__text {
+    font-size: 2em;
+    margin: 2em 0;
+  }
+
+  &__button {
+    padding: 0.75em 2.5em;
+    margin: 2em 0;
+    font-size: 1.25em;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    background-color: $white;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: transform 0.25s;
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: $blue;
+    }
+  }
+}

@@ -1,0 +1,4 @@
+<div class="tile__container" *ngIf="(loaded | async) && !(loading | async)">
+  <button class="tile" (click)="selectAnswer(option.nodeId)" *ngFor="let option of options">{{option.data.answerText}}</button>
+</div>
+<app-loader *ngIf="(loading | async)"></app-loader>

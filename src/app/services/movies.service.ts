@@ -1,15 +1,42 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoviesService {
-  constructor(private httpClient: HttpClient) {}
+  public config: Observable<{}>;
+  public movies: Observable<any>;
 
-  public getMovies(): Observable<string> {
+  constructor(private httpClient: HttpClient) {
+  }
+
+  public getMovies(): Observable<any> {
     const jsonFile = 'assets/tmdb_5000_movies.json';
-    return this.httpClient.get(jsonFile, { responseType: 'text' });
+    this.movies = this.httpClient.get(jsonFile);
+    return this.movies;
+  }
+
+  public getMovieData(): Observable<any> {
+    if (!this.movies) {
+      return this.getMovies();
+    } else {
+      return this.movies;
+    }
+  }
+
+  public getConfig(): Observable<{}> {
+    const config = 'assets/movie-questions.json';
+    this.config = this.httpClient.get(config);
+    return this.config;
+  }
+
+  public getConfigData(): Observable<{}> {
+    if (!this.config) {
+      return this.getConfig();
+    } else {
+      return this.config;
+    }
   }
 }
