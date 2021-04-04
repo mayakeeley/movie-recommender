@@ -14,17 +14,23 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {RouterModule, Routes} from '@angular/router';
 import {RecommenderModule} from './app/recommender/recommender.module';
+import { LandingPageComponent } from './app/landing-page/landing-page.component';
 
 export const ROUTES: Routes = [
   {
+    path: 'landing-page',
+    pathMatch: 'full',
+    component: LandingPageComponent
+  },
+  {
     path: '**',
-    redirectTo: 'recommender',
+    redirectTo: 'landing-page',
     pathMatch: 'full',
   },
 ];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LandingPageComponent],
   imports: [
     BrowserModule,
     CommonModule,

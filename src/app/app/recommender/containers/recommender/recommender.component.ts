@@ -5,6 +5,7 @@ import {QuestionModel} from '../../../../models';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../../store';
 import * as fromActions from '../../../../store/actions';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-recommender',
@@ -14,10 +15,19 @@ import * as fromActions from '../../../../store/actions';
 export class RecommenderComponent implements OnInit, OnDestroy {
   public isFirstRoute: boolean;
   public stepData: QuestionModel;
+  public recommenderPath = 'recommender';
   private subs: Subscription[] = [];
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private store: Store<fromStore.MoviesState>) {
+  constructor(private store: Store<fromStore.MoviesState>, private router: Router) {
+    this.router.events.subscribe((event: any) => {
+      // If someone navigates here again whilst they're already here
+      // i.e. they click a robot builder link. If they do that we re-init
+      // the journey.
+      if (event instanceof NavigationEnd) {
+        this.initRecommender();
+      }
+    });
   }
 
   public ngOnInit(): void {
@@ -39,6 +49,26 @@ export class RecommenderComponent implements OnInit, OnDestroy {
 
   public back(): void {
     this.store.dispatch(new fromActions.MoviesPrevStep());
+  }
+
+  public initRecommender(): void {
+    const page = this.router.url.match(/.*\/([^?]+)/);
+    const path = page[page.length - 1];
+    if (path === this.recommenderPath) {
+      this.subs.push(
+        this.store.select(fromSelectors.getCurrentStep).subscribe((currentStep) => {
+          if (currentStep) {
+            const currentPath = currentStep.nodeId;
+
+            this.store.dispatch(
+              new fromActions.MoviesNavigate({
+                path: [`/recommender/${currentPath}`],
+              })
+            );
+          }
+        })
+      );
+    }
   }
 
 }

@@ -29,4 +29,8 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  public restart(): void {
+    this.store.dispatch(new fromActions.MoviesRestart());
+  }
+
 }

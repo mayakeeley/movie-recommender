@@ -28,6 +28,8 @@ export const MOVIES_GET_RECOMMENDED = '[Movies] get recommended';
 export const MOVIES_GET_RECOMMENDED_SUCCESS = '[Movies] get recommended success';
 export const MOVIES_GET_RECOMMENDED_FAIL = '[Movies] get recommended fail';
 
+export const MOVIES_RESTART = '[Movies] restart';
+
 
 export class MoviesStart implements Action {
   public readonly type = MOVIES_START;
@@ -154,6 +156,10 @@ export class MoviesNavigate implements Action {
   }
 }
 
+export class MoviesRestart implements Action {
+  public readonly type = MOVIES_RESTART;
+}
+
 export type MoviesAction = MoviesStart
   | MoviesStartSuccess
   | MoviesStartFail
@@ -171,4 +177,5 @@ export type MoviesAction = MoviesStart
   | MoviesRemoveOutcomeFail
   | MoviesGetRecommended
   | MoviesGetRecommendedSuccess
-  | MoviesGetRecommendedFail;
+  | MoviesGetRecommendedFail
+  | MoviesRestart;

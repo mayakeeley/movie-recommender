@@ -131,6 +131,17 @@ export function reducer(state = initialState, action: fromMovies.MoviesAction): 
         loaded: false
       };
     }
+    case fromMovies.MOVIES_RESTART: {
+      return {
+        steps: [],
+        stepNumber: 0,
+        currentStep: undefined,
+        suggestedMovies: [],
+        movieOutcomes: [],
+        loading: false,
+        loaded: false
+      };
+    }
   }
   return state;
 }
