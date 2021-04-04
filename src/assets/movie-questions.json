@@ -1,0 +1,801 @@
+[
+  {
+    "nodeType": "question",
+    "nodeId": "820b14e2-9553-11eb-a8b3-0242ac130003",
+    "data": {
+      "questionText": "Are you looking for a factual film?"
+    },
+    "children": [
+      {
+        "nodeType": "answer",
+        "nodeId": "820b171c-9553-11eb-a8b3-0242ac130003",
+        "data": {
+          "answerText": "Yes",
+          "outcome": {
+            "outcomeType": "genres",
+            "options": {
+              "value": 99
+            }
+          }
+        },
+        "children": [
+          {
+            "nodeType": "question",
+            "nodeId": "820b18de-9553-11eb-a8b3-0242ac130003",
+            "data": {
+              "questionText": "What kind of factual film are you looking for?"
+            },
+            "children": [
+              {
+                "nodeType": "answer",
+                "nodeId": "820b19c4-9553-11eb-a8b3-0242ac130003",
+                "data": {
+                  "answerText": "Music",
+                  "outcome": {
+                    "outcomeType": "genres",
+                    "options": {
+                      "value": 10402
+                    }
+                  }
+                },
+                "children": [
+                  {
+                    "nodeType": "results",
+                    "nodeId": "820b1a96-9553-11eb-a8b3-0242ac130003"
+                  }
+                ]
+              },
+              {
+                "nodeType": "answer",
+                "nodeId": "820b1b5e-9553-11eb-a8b3-0242ac130003",
+                "data": {
+                  "answerText": "History",
+                  "outcome": {
+                    "outcomeType": "genres",
+                    "options": {
+                      "value": 36
+                    }
+                  }
+                },
+                "children": [
+                  {
+                    "nodeType": "results",
+                    "nodeId": "820b1dde-9553-11eb-a8b3-0242ac130003"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nodeType": "answer",
+        "nodeId": "820b202c-9553-11eb-a8b3-0242ac130003",
+        "data": {
+          "answerText": "No"
+        },
+        "children": [
+          {
+            "nodeType": "question",
+            "nodeId": "820b20ea-9553-11eb-a8b3-0242ac130003",
+            "data": {
+              "questionText": "Should the film be appropriate for children?"
+            },
+            "children": [
+              {
+                "nodeType": "answer",
+                "nodeId": "820b21a8-9553-11eb-a8b3-0242ac130003",
+                "data": {
+                  "answerText": "Yes",
+                  "outcome": {
+                    "outcomeType": "genres",
+                    "options": {
+                      "value": 10751
+                    }
+                  }
+                },
+                "children": [
+                  {
+                    "nodeType": "question",
+                    "nodeId": "820b225c-9553-11eb-a8b3-0242ac130003",
+                    "data": {
+                      "questionText": "What kind of family film are you looking for?"
+                    },
+                    "children": [
+                      {
+                        "nodeType": "answer",
+                        "nodeId": "820b24aa-9553-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "answerText": "Animated",
+                          "outcome": {
+                            "outcomeType": "genres",
+                            "options": {
+                              "value": 16
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "nodeType": "results",
+                            "nodeId": "820b2572-9553-11eb-a8b3-0242ac130003"
+                          }
+                        ]
+                      },
+                      {
+                        "nodeType": "answer",
+                        "nodeId": "820b2630-9553-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "answerText": "Fantasy",
+                          "outcome": {
+                            "outcomeType": "genres",
+                            "options": {
+                              "value": 14
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "nodeType": "results",
+                            "nodeId": "820b26e4-9553-11eb-a8b3-0242ac130003"
+                          }
+                        ]
+                      },
+                      {
+                        "nodeType": "answer",
+                        "nodeId": "820b27a2-9553-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "answerText": "Comedy",
+                          "outcome": {
+                            "outcomeType": "genres",
+                            "options": {
+                              "value": 35
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "nodeType": "results",
+                            "nodeId": "820b2856-9553-11eb-a8b3-0242ac130003"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nodeType": "answer",
+                "nodeId": "820b2914-9553-11eb-a8b3-0242ac130003",
+                "data": {
+                  "answerText": "No"
+                },
+                "children": [
+                  {
+                    "nodeType": "question",
+                    "nodeId": "820b29d2-9553-11eb-a8b3-0242ac130003",
+                    "data": {
+                      "questionText": "Do you prefer blockbusters or indie films?"
+                    },
+                    "children": [
+                      {
+                        "nodeType": "answer",
+                        "nodeId": "820b2c16-9553-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "answerText": "Blockbuster",
+                          "outcome": {
+                            "outcomeType": "budget",
+                            "options": {
+                              "min": 2000000
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "nodeType": "question",
+                            "nodeId": "820b2cde-9553-11eb-a8b3-0242ac130003",
+                            "data": {
+                              "questionText": "Pick your favourite genre"
+                            },
+                            "children": [
+                              {
+                                "nodeType": "answer",
+                                "nodeId": "820b2d9c-9553-11eb-a8b3-0242ac130003",
+                                "data": {
+                                  "answerText": "Action",
+                                  "outcome": {
+                                    "outcomeType": "genres",
+                                    "options": {
+                                      "value": 28
+                                    }
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "nodeType": "question",
+                                    "nodeId": "820b2e50-9553-11eb-a8b3-0242ac130003",
+                                    "data": {
+                                      "questionText": "What kind of action film are you looking for?"
+                                    },
+                                    "children": [
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b2f04-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Science fiction",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 878
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b2fb8-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b3076-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Comedy",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 35
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b3134-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b3346-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Fantasy",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 14
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b3404-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "nodeType": "answer",
+                                "nodeId": "820b34c2-9553-11eb-a8b3-0242ac130003",
+                                "data": {
+                                  "answerText": "Drama",
+                                  "outcome": {
+                                    "outcomeType": "genres",
+                                    "options": {
+                                      "value": 18
+                                    }
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "nodeType": "question",
+                                    "nodeId": "",
+                                    "data": {
+                                      "questionText": "What kind of drama film are you looking for?"
+                                    },
+                                    "children": [
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b3576-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "History",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 36
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b3634-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b36f2-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Thriller",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 53
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b37b0-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b426e-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Romance",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 10749
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b43c2-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b4494-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Crime",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 80
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b4552-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "nodeType": "answer",
+                                "nodeId": "820b4610-9553-11eb-a8b3-0242ac130003",
+                                "data": {
+                                  "answerText": "Comedy",
+                                  "outcome": {
+                                    "outcomeType": "genres",
+                                    "options": {
+                                      "value": 35
+                                    }
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "nodeType": "question",
+                                    "nodeId": "820b46ce-9553-11eb-a8b3-0242ac130003",
+                                    "data": {
+                                      "questionText": "What kind of comedy film are you looking for?"
+                                    },
+                                    "children": [
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b4796-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Drama",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 18
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b4994-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b4a5c-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Romance",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 10749
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b4b10-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b4bce-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Action",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 28
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b4c96-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b4d4a-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Horror",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 27
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b4f66-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nodeType": "answer",
+                        "nodeId": "820b5024-9553-11eb-a8b3-0242ac130003",
+                        "data": {
+                          "answerText": "Indie",
+                          "outcome": {
+                            "outcomeType": "budget",
+                            "options": {
+                              "max": 2000000,
+                              "min": 0
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "nodeType": "question",
+                            "nodeId": "820b50ec-9553-11eb-a8b3-0242ac130003",
+                            "data": {
+                              "questionText": "Pick your favourite genre"
+                            },
+                            "children": [
+                              {
+                                "nodeType": "answer",
+                                "nodeId": "820b51aa-9553-11eb-a8b3-0242ac130003",
+                                "data": {
+                                  "answerText": "Action",
+                                  "outcome": {
+                                    "outcomeType": "genres",
+                                    "options": {
+                                      "value": 28
+                                    }
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "nodeType": "question",
+                                    "nodeId": "820b525e-9553-11eb-a8b3-0242ac130003",
+                                    "data": {
+                                      "questionText": "What kind of action film are you looking for?"
+                                    },
+                                    "children": [
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b531c-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Science fiction",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 878
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b5510-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b55d8-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Comedy",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 35
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b568c-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b5740-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Fantasy",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 14
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b5998-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "nodeType": "answer",
+                                "nodeId": "820b5ccc-9553-11eb-a8b3-0242ac130003",
+                                "data": {
+                                  "answerText": "Drama",
+                                  "outcome": {
+                                    "outcomeType": "genres",
+                                    "options": {
+                                      "value": 18
+                                    }
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "nodeType": "question",
+                                    "nodeId": "820b65a0-9553-11eb-a8b3-0242ac130003",
+                                    "data": {
+                                      "questionText": "What kind of drama film are you looking for?"
+                                    },
+                                    "children": [
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b6820-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "History",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 36
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b6a00-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b6adc-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Thriller",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 53
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b6ba4-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b6f8c-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Romance",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 10749
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b7176-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b732e-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Crime",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 80
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b7400-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "nodeType": "answer",
+                                "nodeId": "820b74d2-9553-11eb-a8b3-0242ac130003",
+                                "data": {
+                                  "answerText": "Comedy",
+                                  "outcome": {
+                                    "outcomeType": "genres",
+                                    "options": {
+                                      "value": 35
+                                    }
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "nodeType": "question",
+                                    "nodeId": "820b7590-9553-11eb-a8b3-0242ac130003",
+                                    "data": {
+                                      "questionText": "What kind of comedy film are you looking for?"
+                                    },
+                                    "children": [
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b7658-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Drama",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 18
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b7e00-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b82b0-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Romance",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 10749
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b83b4-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b847c-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Action",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 28
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b8738-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nodeType": "answer",
+                                        "nodeId": "820b8850-9553-11eb-a8b3-0242ac130003",
+                                        "data": {
+                                          "answerText": "Horror",
+                                          "outcome": {
+                                            "outcomeType": "genres",
+                                            "options": {
+                                              "value": 27
+                                            }
+                                          }
+                                        },
+                                        "children": [
+                                          {
+                                            "nodeType": "results",
+                                            "nodeId": "820b8918-9553-11eb-a8b3-0242ac130003"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

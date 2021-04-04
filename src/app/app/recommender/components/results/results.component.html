@@ -1,5 +1,5 @@
 <div *ngIf="(loaded | async) && !(loading | async)">
   <div *ngFor="let movie of movies">{{movie.title}}</div>
-  <button routerLink="/landing-page" (click)="restart()">Restart</button>
+  <button class="results__button" routerLink="/landing-page" (click)="restart()">Restart</button>
 </div>
 <app-loader *ngIf="(loading | async)"></app-loader>

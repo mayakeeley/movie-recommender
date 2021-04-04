@@ -27,7 +27,7 @@ export class MoviesService {
   }
 
   public getConfig(): Observable<{}> {
-    const config = 'assets/config.json';
+    const config = 'assets/movie-questions.json';
     this.config = this.httpClient.get(config);
     return this.config;
   }

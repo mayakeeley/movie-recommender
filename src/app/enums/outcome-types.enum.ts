@@ -1,21 +1,12 @@
 export enum OutcomeTypesEnum {
   budget = 'budget',
   genres = 'genres',
-  homepage = 'homepage',
   keywords = 'keywords',
   original_language = 'original_language',
-  original_title = 'original_title',
-  overview = 'overview',
   popularity = 'popularity',
-  production_companies = 'production_companies',
-  production_countries = 'production_countries',
   release_date = 'release_date',
   revenue = 'revenue',
   runtime = 'runtime',
   spoken_languages = 'spoken_languages',
-  status = 'status',
-  tagline = 'tagline',
-  title = 'title',
   vote_average = 'vote_average',
-  vote_count = 'vote_count'
 }

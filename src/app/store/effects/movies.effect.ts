@@ -146,35 +146,12 @@ export class MoviesEffect {
     switchMap(([never, outcomes]) => {
       return this.moviesService.getMovieData().pipe(
         map(movies => {
-          let recommendedMovies: MovieModel[] = [...movies];
-          outcomes.forEach(outcome => {
-
-            if (outcome.outcomeType === OutcomeTypesEnum.genres) {
-              outcome.options.forEach(option => {
-                recommendedMovies = recommendedMovies.filter(movie => movie.genres.find(genre => genre.id === option.value));
-              });
-            }
-
-            if (outcome.outcomeType === OutcomeTypesEnum.budget) {
-              outcome.options.forEach(option => {
-                recommendedMovies = recommendedMovies.filter(movie => {
-                  if (option.min) {
-                    if (option.max) {
-                      return +movie.budget > option.min && +movie.budget < option.max;
-                    } else {
-                      return +movie.budget > option.min;
-                    }
-                  }
-
-                  if (option.max) {
-                    return +movie.budget < option.max;
-                  }
-                });
-              });
-            }
+          const recommendedMovies: MovieModel[] = [...movies];
+          let filteredMovies = recommendedMovies.filter(movie => {
+            return this.filterRecommended(movie, outcomes);
           });
-          recommendedMovies = recommendedMovies.sort(() => Math.random() - 0.5).slice(0, 9);
-          return new fromActions.MoviesGetRecommendedSuccess(recommendedMovies);
+          filteredMovies = filteredMovies.sort(() => Math.random() - 0.5).slice(0, 9);
+          return new fromActions.MoviesGetRecommendedSuccess(filteredMovies);
         }),
         catchError(error => of(new fromActions.MoviesNextStepFail(error)))
       );
@@ -288,5 +265,32 @@ export class MoviesEffect {
       }
     });
     return result;
+  }
+
+  private filterRecommended(movie: MovieModel, outcomes: OutcomeModel[]): boolean {
+
+    let count = 0;
+    outcomes.forEach(outcome => {
+      if (outcome.outcomeType === OutcomeTypesEnum.genres) {
+        const allGenresMatch = outcome.options.every(option => movie.genres.some(genre => genre.id === option.value));
+        if (allGenresMatch) {
+          count++;
+        }
+      }
+
+      if (outcome.outcomeType === OutcomeTypesEnum.budget) {
+        const withinBudget = outcome.options.every(option => {
+          let result = option.min <= +movie.budget;
+          if (result && option.max) {
+            result = option.max >= +movie.budget;
+          }
+          return result;
+        });
+        if (withinBudget) {
+          count++;
+        }
+      }
+    });
+    return count === outcomes.length;
   }
 }

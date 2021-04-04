@@ -1,0 +1,33 @@
+$blue: #60a7fc;
+$light-blue: #b9d9ff;
+$gray: #f3f3f3;
+$mid-gray: #999999;
+$dark-gray: #212121;
+$black: #000000;
+$white: #ffffff;
+$pink: #FF5C83;
+
+
+.tile {
+  height: 15rem;
+  width: 15rem;
+  margin: 1em;
+  border-radius: 0.5em;
+  box-shadow: 0.1em 0.25em 0.25em rgba(0, 0, 0, 0.08);
+  border: none;
+  background-color: $white;
+  font-size: 2em;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blue;
+  }
+
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+}
