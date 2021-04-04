@@ -11,6 +11,8 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {StoreModule} from '@ngrx/store';
 import {NgModule} from '@angular/core';
 import { LoaderComponent } from './components/loader/loader.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
 
 export const ROUTES: Routes = [
   {
@@ -29,7 +31,8 @@ export const ROUTES: Routes = [
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(effects),
-    RouterModule.forChild(ROUTES)
+    RouterModule.forChild(ROUTES),
+    CarouselModule
   ],
   entryComponents: [TilesComponent, ResultsComponent],
   providers: [],

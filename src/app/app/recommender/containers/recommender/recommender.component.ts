@@ -47,7 +47,12 @@ export class RecommenderComponent implements OnInit, OnDestroy {
   }
 
   public back(): void {
-    this.store.dispatch(new fromActions.MoviesPrevStep());
+    if (this.isFirstRoute) {
+      this.router.navigate(['/landing-page']);
+    }
+    if (!this.isFirstRoute) {
+      this.store.dispatch(new fromActions.MoviesPrevStep());
+    }
   }
 
   public restart(): void {

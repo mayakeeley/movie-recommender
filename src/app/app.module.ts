@@ -24,7 +24,7 @@ export const ROUTES: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'recommender',
+    redirectTo: 'landing-page',
     pathMatch: 'full',
   },
 ];

@@ -5,7 +5,7 @@ import * as fromActions from '../../../../store/actions';
 import {MovieModel} from '../../../../models';
 import * as fromSelectors from '../../../../store/selectors';
 import {Observable} from 'rxjs';
-import {OwlOptions} from "ngx-owl-carousel-o";
+import {OwlOptions} from 'ngx-owl-carousel-o';
 
 
 @Component({
@@ -23,7 +23,8 @@ export class ResultsComponent implements OnInit {
     margin: 20,
     mouseDrag: true,
     touchDrag: true,
-    autoHeight: true,
+    autoHeight: false,
+    items: 1,
     responsive: {
       0: {
         items: 1,
@@ -45,6 +46,14 @@ export class ResultsComponent implements OnInit {
 
   public restart(): void {
     this.store.dispatch(new fromActions.MoviesRestart());
+  }
+
+  public movieGenres(genres: { id: number; name: string }[]): string {
+    return genres.map((genre) => genre.name).join(', ');
+  }
+
+  public getYear(date): number {
+    return new Date(date).getUTCFullYear();
   }
 
 }

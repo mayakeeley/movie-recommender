@@ -1,5 +1,5 @@
 <div class="recommender">
   <h3 class="recommender__title" *ngIf="stepData?.questionText">{{stepData.questionText}}</h3>
   <router-outlet></router-outlet>
-  <button class="recommender__button" (click)="back()" *ngIf="!isFirstRoute">Back</button>
+  <button class="recommender__button" (click)="back()">Back</button>
 </div>

@@ -1,23 +1,18 @@
-<div *ngIf="(loaded | async) && !(loading | async)">
-  <h3 class="movies__title movies__recommended__title">Recommended Films</h3>
-    <owl-carousel-o class="movies__carousel" [options]="customOptions">
-      <ng-container
-        *ngFor="let movie of movies | slice: 0:5; let i = index"
-      >
-        <ng-template carouselSlide>
-          <a class="movies__recommended__tile">
-            <div class="movies__recommended__heading">
-              <h4 class="movies__carousel__title">{{ movie.title }}</h4>
-              <p class="movies__carousel__text">{{ getYear(movie.release_date) }}</p>
-              <p class="movies__carousel__text">{{ movie.runtime + " mins" }}</p>
-              <p class="movies__carousel__text">{{ movie.vote_average + "/10" }}</p>
-            </div>
-            <p>{{ movie.overview }}</p>
-            <p>{{ movieGenres(movie.genres) }}</p>
-          </a>
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
+<div class="results" *ngIf="(loaded | async) && !(loading | async)">
+  <h1 class="results__title">Recommended Films</h1>
   <button class="results__button" routerLink="/landing-page" (click)="restart()">Restart</button>
+  <div class="results__movies">
+    <div class="results__movie" *ngFor="let movie of movies; let i = index">
+      <h4 class="results__movie__title">{{ movie.title }}</h4>
+      <p class="results__movie__text"><span class="results__bold">Year:</span> {{ getYear(movie.release_date) }}</p>
+      <p class="results__movie__text"><span class="results__bold">Runtime:</span> {{ movie.runtime + " mins" }}</p>
+      <p class="results__movie__text"><span class="results__bold">Rating:</span> {{ movie.vote_average + "/10" }}</p>
+      <p class="results__movie__text"><span
+        class="results__bold">Overview:</span> {{ movie.overview.length > 100 ? movie.overview.slice(0, 100) + '...' : movie.overview }}
+      </p>
+      <p class="results__movie__text"><span class="results__bold">Genres:</span> {{ movieGenres(movie.genres) }}</p>
+    </div>
+  </div>
 </div>
 <app-loader *ngIf="(loading | async)"></app-loader>
+
