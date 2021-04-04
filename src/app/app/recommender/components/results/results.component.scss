@@ -1,5 +1,16 @@
+$blue: #60a7fc;
+$light-blue: #b9d9ff;
+$gray: #B8B8B8;
+$mid-gray: #CFCFCF;
+$dark-gray: #212121;
+$black: #000000;
+$white: #ffffff;
+
 .results {
   &__button {
-    
+      background-color: $blue;
+      border: none;
+      border-radius: 0.5em;
+      padding: 1em 2em;
   }
 }

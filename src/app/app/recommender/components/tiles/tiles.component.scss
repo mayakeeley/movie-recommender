@@ -18,9 +18,13 @@ $pink: #FF5C83;
   background-color: $white;
   font-size: 2em;
   cursor: pointer;
+  transition: transform 0.25s;
+  outline: none;
+
 
   &:hover {
     background-color: $blue;
+    transform: scale(1.05);
   }
 
 
