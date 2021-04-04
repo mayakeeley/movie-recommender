@@ -21,11 +21,10 @@ export class RecommenderComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromStore.MoviesState>, private router: Router) {
     this.router.events.subscribe((event: any) => {
-      // If someone navigates here again whilst they're already here
-      // i.e. they click a robot builder link. If they do that we re-init
-      // the journey.
+      // If someone restarts the journey
+      // If they do that we restart the journey.
       if (event instanceof NavigationEnd) {
-        this.initRecommender();
+        this.restart();
       }
     });
   }
@@ -51,7 +50,7 @@ export class RecommenderComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromActions.MoviesPrevStep());
   }
 
-  public initRecommender(): void {
+  public restart(): void {
     const page = this.router.url.match(/.*\/([^?]+)/);
     const path = page[page.length - 1];
     if (path === this.recommenderPath) {
