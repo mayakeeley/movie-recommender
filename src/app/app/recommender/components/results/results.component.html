@@ -1,5 +1,23 @@
 <div *ngIf="(loaded | async) && !(loading | async)">
-  <div *ngFor="let movie of movies">{{movie.title}}</div>
+  <h3 class="movies__title movies__recommended__title">Recommended Films</h3>
+    <owl-carousel-o class="movies__carousel" [options]="customOptions">
+      <ng-container
+        *ngFor="let movie of movies | slice: 0:5; let i = index"
+      >
+        <ng-template carouselSlide>
+          <a class="movies__recommended__tile">
+            <div class="movies__recommended__heading">
+              <h4 class="movies__carousel__title">{{ movie.title }}</h4>
+              <p class="movies__carousel__text">{{ getYear(movie.release_date) }}</p>
+              <p class="movies__carousel__text">{{ movie.runtime + " mins" }}</p>
+              <p class="movies__carousel__text">{{ movie.vote_average + "/10" }}</p>
+            </div>
+            <p>{{ movie.overview }}</p>
+            <p>{{ movieGenres(movie.genres) }}</p>
+          </a>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
   <button class="results__button" routerLink="/landing-page" (click)="restart()">Restart</button>
 </div>
 <app-loader *ngIf="(loading | async)"></app-loader>
