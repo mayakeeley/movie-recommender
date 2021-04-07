@@ -22,15 +22,14 @@ export class MoviesGuard implements CanActivateChild {
   }
 
   public canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return combineLatest(this.store.select(fromSelectors.getCurrentStep), this.store.select(fromSelectors.getSteps)).pipe(
-      tap(([currentStep, steps]) => {
+    return combineLatest(this.store.select(fromSelectors.getCurrentStep)).pipe(
+      tap(([currentStep]) => {
         if (!currentStep) {
           this.store.dispatch(new fromActions.MoviesStart());
         }
       }),
-      filter(([currentStep, steps]) => !!currentStep),
-      switchMap(([currentStep, steps]) => {
-        const requestedPath = state.url.split('/')[2];
+      filter(([currentStep]) => !!currentStep),
+      switchMap(([currentStep]) => {
         this.routes = [];
         const step = currentStep.nodeId;
         if (this.firstInit) {
@@ -41,17 +40,6 @@ export class MoviesGuard implements CanActivateChild {
               path: [`recommender/${step}`],
             })
           );
-        }
-        else {
-          if (step !== requestedPath) {
-            const prevStepPath = steps[steps.length - 2].nodeId;
-            if (requestedPath === prevStepPath) {
-              // this.store.dispatch(new fromActions.MoviesPrevStep());
-            }
-            else {
-              // this.store.dispatch(new fromActions.MoviesNextStep());
-            }
-          }
         }
 
         this.firstInit = false;
